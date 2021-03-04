@@ -7,7 +7,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,6 +36,9 @@ public class UserResourceTest {
 
     @Autowired
     Users users;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @Test
     void createNewUser() throws Exception {
@@ -96,6 +101,20 @@ public class UserResourceTest {
                     .andExpect(status().isBadRequest());
 
             assertTrue(users.count() == 0);
+        }
+
+        @Test
+        void loginCanNotExist() throws Exception {
+            users.save(new User("tiago.lima@zup.com.br", Password.valueOf("abc123", encoder)));
+
+            String json = json(new CreateNewUserRequest("tiago.lima@zup.com.br", "abc123"));
+
+            mockMvc.perform(post("/user")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json))
+                    .andExpect(status().isBadRequest());
+
+            assertTrue(users.count() == 1);
         }
 
     }

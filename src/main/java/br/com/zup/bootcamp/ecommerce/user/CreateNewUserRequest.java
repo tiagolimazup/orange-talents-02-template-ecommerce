@@ -14,6 +14,7 @@ class CreateNewUserRequest {
     @JsonProperty
     @NotBlank
     @Email
+    @UniqueLogin
     final String login;
 
     @JsonProperty
