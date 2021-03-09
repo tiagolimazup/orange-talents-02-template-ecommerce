@@ -1,5 +1,7 @@
 package br.com.zup.bootcamp.ecommerce.user;
 
+import br.com.zup.bootcamp.ecommerce.validation.Unique;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +16,7 @@ class CreateNewUserRequest {
     @JsonProperty
     @NotBlank
     @Email
-    @UniqueLogin
+    @Unique(entity = User.class, field = "login")
     final String login;
 
     @JsonProperty

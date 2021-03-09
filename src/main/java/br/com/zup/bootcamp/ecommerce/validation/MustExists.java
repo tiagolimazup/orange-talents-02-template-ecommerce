@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.ecommerce.user;
+package br.com.zup.bootcamp.ecommerce.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,13 +9,16 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueLoginValidator.class)
-@interface UniqueLogin {
+@Constraint(validatedBy = MustExistsValidator.class)
+public @interface MustExists {
 
-    String message() default "{login.already.exists}";
+    String message() default "{must.exists}";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
 
+    Class<?> entity();
+
+    String field();
 }
