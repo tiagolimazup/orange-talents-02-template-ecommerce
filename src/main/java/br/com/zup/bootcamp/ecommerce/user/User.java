@@ -13,31 +13,43 @@ import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 
 @Entity
-class User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @NotBlank
     @Email
-    String login;
+    private String username;
 
     @Embedded
     @NotNull
     @Valid
-    Password password;
+    private Password password;
 
     @NotNull
     @PastOrPresent
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Deprecated
     User() { }
 
-    User(String login, Password password) {
-        this.login = login;
+    public User(String username, Password password) {
+        this.username = username;
         this.password = password;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password.get();
     }
 }

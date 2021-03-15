@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
-class Password {
+public class Password {
 
     @NotBlank
     @Column(name = "password")
@@ -20,7 +20,11 @@ class Password {
         this.value = value;
     }
 
-    static Password valueOf(String raw, PasswordEncoder encoder) {
+    String get() {
+        return value;
+    }
+
+    public static Password valueOf(String raw, PasswordEncoder encoder) {
         return new Password(encoder.encode(raw));
     }
 }

@@ -1,25 +1,32 @@
 package br.com.zup.bootcamp.ecommerce.user;
 
+import br.com.zup.bootcamp.ecommerce.SecuredWebTestConfiguration;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@Import(SecuredWebTestConfiguration.class)
 @AutoConfigureMockMvc
 @AutoConfigureDataJpa
 @Transactional
@@ -46,7 +53,7 @@ public class UserResourceTest {
                     .content(json))
                 .andExpect(status().isOk());
 
-        assertTrue(users.existsByLogin("tiago.lima@gmail.com"));
+        assertTrue(users.existsByUsername("tiago.lima@gmail.com"));
     }
 
     @Nested

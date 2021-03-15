@@ -1,1 +1,4 @@
-
+ecommerce:
+  jwt:
+    secret: Ym9vdGNhbXAtenVwLWVkdQ==
+    expiration: 2629800000 # 1 mês

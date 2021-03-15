@@ -3,7 +3,6 @@ package br.com.zup.bootcamp.ecommerce.user;
 import br.com.zup.bootcamp.ecommerce.validation.Unique;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -16,20 +15,20 @@ class CreateNewUserRequest {
     @JsonProperty
     @NotBlank
     @Email
-    @Unique(entity = User.class, field = "login")
-    final String login;
+    @Unique(entity = User.class, field = "username")
+    final String username;
 
     @JsonProperty
     @NotBlank
     @Size(max = 6)
     final String password;
 
-    CreateNewUserRequest(String login, String password) {
-        this.login = login;
+    CreateNewUserRequest(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
     User toUser(PasswordEncoder encoder) {
-        return new User(login, Password.valueOf(password, encoder));
+        return new User(username, Password.valueOf(password, encoder));
     }
 }
