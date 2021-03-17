@@ -10,8 +10,12 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
 
     private final User user;
 
-    AuthenticatedUser(User user) {
+    public AuthenticatedUser(User user) {
         super(user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("user")));
         this.user = user;
+    }
+
+    public User get() {
+        return user;
     }
 }

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-class Category {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ class Category {
     @Deprecated
     Category() { }
 
-    Category(String name) {
+    public Category(String name) {
         this(name, null);
     }
 
@@ -34,7 +34,7 @@ class Category {
         this.parent = parent;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
