@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -93,7 +94,7 @@ class ProductResourceTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json(newProductRequest)))
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.errors[?(@.field == 'name')].message").value("must not be null"));
+                    .andExpect(jsonPath("$.errors[?(@.field == 'name')].message").value("must not be blank"));
 
             assertTrue(products.count() == 0);
         }

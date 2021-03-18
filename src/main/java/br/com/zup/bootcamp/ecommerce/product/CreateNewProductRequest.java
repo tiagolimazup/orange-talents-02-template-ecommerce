@@ -14,14 +14,15 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import static java.util.stream.Collectors.toSet;
 
 class CreateNewProductRequest {
 
     @JsonProperty
-    @NotNull
+    @NotBlank
     final String name;
 
     @JsonProperty
@@ -63,7 +64,10 @@ class CreateNewProductRequest {
     }
 
     private Product toProduct(User user, Category category) {
-        Set<Characteristic> productCharacteristics = characteristics.entrySet().stream().map(e -> new Characteristic(e.getKey(), e.getValue().toString())).collect(Collectors.toSet());
+        Set<Characteristic> productCharacteristics = characteristics.entrySet().stream()
+                .map(e -> new Characteristic(e.getKey(), e.getValue().toString()))
+                .collect(toSet());
+
         return new Product(user, name, price, quantity, productCharacteristics, description, category);
     }
 }
